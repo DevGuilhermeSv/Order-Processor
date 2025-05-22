@@ -1,5 +1,6 @@
-using System.Threading.Channels;
+using Application.Services;
 using IoC;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 // Acessar valores diretamente
@@ -10,8 +11,24 @@ var mongoDatabase = builder.Configuration["MongoDb:Database"] ?? throw new Excep
 
 builder.Services.Configure(mongoConnection, mongoDatabase);
 builder.Services.Repositories();
-var productChannel = Channel.CreateUnbounded<Domain.Entities.Order>();
-builder.Services.AddSingleton(productChannel);
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<OrderConsumer>();
+
+    x.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+
+        cfg.ReceiveEndpoint("order-queue", e =>
+        {
+            e.ConfigureConsumer<OrderConsumer>(ctx);
+        });
+    });
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
