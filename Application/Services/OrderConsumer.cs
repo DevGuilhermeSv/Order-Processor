@@ -1,7 +1,8 @@
-﻿using Application.Models;
+﻿using Contracts;
 using Domain.Entities;
 using Infrastructure;
 using MassTransit;
+using Product = Domain.Entities.Product;
 
 namespace Application.Services;
 
@@ -22,7 +23,13 @@ public class OrderConsumer : IConsumer<OrderMessage>
         {
             Id = msg.Id,
             CreationDate = msg.CreationDate,
-            Products = msg.Products
+            Products = msg.Products.Select( p => new Product()
+            {
+                Id = p.Id,
+                OrderId = p.OrderId,
+                Name = p.Name,
+                Value = p.Value
+            }).ToList()
         };
 
         await _repository.Create(pedido);
