@@ -8,7 +8,16 @@ public class OrderMessage
     [BsonGuidRepresentation(GuidRepresentation.Standard)]
     public Guid Id { get; set; } 
     public DateTime CreationDate { get; set; }
+    
+    public OrderStatus Status { get; set; }
     public required List<Product> Products { get; set; }
+}
+
+public enum OrderStatus
+{
+    CREATED,
+    CANCELLED,
+    FINISHED,
 }
 
 public class Product
