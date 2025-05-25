@@ -2,6 +2,9 @@ namespace Domain.Entities;
 
 public class Product
 {
+    public Product()
+    {
+    }
     public Product(Guid orderId, decimal value)
     {
         OrderId = orderId;
