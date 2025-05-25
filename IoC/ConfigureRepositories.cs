@@ -1,3 +1,4 @@
+using Domain.Entities;
 using Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,5 +9,6 @@ public static class ConfigureRepositories
     public static void Repositories(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddSingleton<IOrderRepository, OrderRepository>();
+        serviceCollection.AddSingleton<OrderContext<Order>>();
     }
 }
