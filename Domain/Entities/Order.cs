@@ -8,11 +8,11 @@ public class Order
     public Guid Id { get; set; }
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
-    private OrderStatus _status;
+    private  OrderStatus _status;
 
-    public string Status
+    public required string Status
     {
-        get => nameof(_status);
+        get => _status.ToString();
         set => _status = (OrderStatus)Enum.Parse(typeof(OrderStatus), value);
     }
 
