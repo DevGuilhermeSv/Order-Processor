@@ -30,9 +30,9 @@ public class OrderController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(PagedResult<OrderResult>), 200)]
-    public IActionResult GetAllOrders([FromQuery] FilterOrderRequest filterOrderRequest)
+    public async Task<IActionResult> GetAllOrders([FromQuery] FilterOrderRequest filterOrderRequest)
     {
-        var orders = _orderService.FindOrders(filterOrderRequest);
+        var orders = await _orderService.FindOrders(filterOrderRequest);
         return Ok(orders);
     }
 }

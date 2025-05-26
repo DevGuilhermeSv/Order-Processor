@@ -25,8 +25,7 @@ builder.Services.AddMassTransit(x =>
             h.Username("guest");
             h.Password("guest");
         });
-        cfg.ConfigureEndpoints(ctx);
-
+       
         cfg.ReceiveEndpoint("order-queue", e =>
         {
             e.ConfigureConsumer<OrderConsumer>(ctx);
