@@ -45,7 +45,7 @@ public class OrderService : IOrderService
         if (!string.IsNullOrEmpty(filterOrderRequest.ProductName))
         {
             filters.Add(builder.Where(p =>
-                p.Products.Any(p => p.Name.ToLower() == filterOrderRequest.ProductName.ToLower())));
+                p.Products.Any(p => p.Name.Contains(filterOrderRequest.ProductName))));
         }
 
         if (filterOrderRequest.Status is not null)
