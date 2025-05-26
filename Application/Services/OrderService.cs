@@ -50,7 +50,7 @@ public class OrderService : IOrderService
 
         if (filterOrderRequest.Status is not null)
         {
-            filters.Add(builder.Where(p => p.Status == nameof(filterOrderRequest.Status.Value)));
+            filters.Add(builder.Where(p => p.Status == filterOrderRequest.Status.ToString()));
         }
 
         var orders =  _orderRepository.GetAll(builder.And(filters));

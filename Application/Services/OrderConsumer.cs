@@ -23,6 +23,7 @@ public class OrderConsumer : IConsumer<OrderMessage>
         {
             Id = msg.Id,
             CreationDate = msg.CreationDate,
+            Status = msg.Status.ToString(),
             Products = msg.Products.Select( p => new Product()
             {
                 Id = p.Id,
