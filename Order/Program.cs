@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 var mongoConnection =
     builder.Configuration["MongoDb:ConnectionString"] ?? throw new Exception("MongoDb:ConnectionString");
 var mongoDatabase = builder.Configuration["MongoDb:Database"] ?? throw new Exception("MongoDb:Database");
+var rabbitConfig = builder.Configuration.GetSection("RabbitMq");
+
 
 builder.Services.Configure(mongoConnection, mongoDatabase);
 builder.Services.Repositories();
@@ -22,16 +24,17 @@ builder.Services.AddMassTransit(x =>
     {
         cfg.Host("localhost", "/", h =>
         {
-            h.Username("guest");
-            h.Password("guest");
+            h.Username(rabbitConfig["Username"]);
+            h.Password(rabbitConfig["Password"]);
         });
        
-        cfg.ReceiveEndpoint("order-queue", e =>
+        cfg.ReceiveEndpoint(rabbitConfig["Queue"], e =>
         {
             e.ConfigureConsumer<OrderConsumer>(ctx);
         });
     });
 });
+
 // Add services to the container.
 
 builder.Services.AddControllers();
