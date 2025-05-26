@@ -1,10 +1,12 @@
 using Domain.Entities;
+using MongoDB.Driver;
 
 namespace Infrastructure;
 
 public interface IOrderRepository
 {
     Task<Order> GetById(Guid id);
-    Task<List<Order>> GetAll();
+    IFindFluent<Order,Order> GetAll(FilterDefinition<Order> findOptions);
     Task Create(Order order);
+    
 }

@@ -17,10 +17,11 @@ public class OrderRepository: IOrderRepository
         return _context.Collection.Find(p => p.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<List<Order>> GetAll()
+    public IFindFluent<Order, Order> GetAll(FilterDefinition<Order> findOptions)
     {
-        return  _context.Collection.Find(p => true).ToListAsync();
+        return _context.Collection.Find(findOptions);
     }
+
 
     public  Task Create(Order order)
     {
