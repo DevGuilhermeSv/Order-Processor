@@ -25,14 +25,15 @@ public class Worker : BackgroundService
         var fakerProduct = new Faker<Product>()
             .RuleFor(p => p.Name, f => f.Commerce.ProductName())
             .RuleFor(p => p.Value, f => decimal.Parse(f.Commerce.Price(10, 100)));
+        var fakerOrder = new Faker<OrderMessage>()
+            .RuleFor(o => o.Products, () => fakerProduct.Generate(new Random().Next(1, 5)))
+            .RuleFor(o => o.Status, f => f.PickRandom<OrderStatus>())
+            .RuleFor( o => o.Id, f => Guid.NewGuid() );
 
         Console.WriteLine($"🚀 Enviando {total} pedidos...");
         for (int i = 0; i < total && !stoppingToken.IsCancellationRequested; i++)
         {
-            var order = new OrderMessage()
-            {
-                Products = fakerProduct.Generate(new Random().Next(1, 5))
-            };
+            var order = fakerOrder.Generate();
 
             await _bus.Publish<OrderMessage>(order, stoppingToken);
             Console.WriteLine($"✅ Pedido {order.Id} enviado");
