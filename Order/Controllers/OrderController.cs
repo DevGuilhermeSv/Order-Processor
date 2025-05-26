@@ -18,9 +18,9 @@ public class OrderController : ControllerBase
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(OrderResult), 200)]
 
-    public IActionResult GetOrderById(Guid id)
+    public async Task<IActionResult> GetOrderById(Guid id)
     {
-        var order = _orderService.FindOrderById(id);
+        var order = await _orderService.FindOrderById(id);
         if (order == null)
         {
             return NotFound();

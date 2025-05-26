@@ -31,7 +31,8 @@ public class OrderService : IOrderService
             Id = order.Id,
             CreationDate = order.CreationDate,
             Products = order.Products,
-            ToTalValue = order.ToTalValue
+            ToTalValue = order.ToTalValue,
+            Status = order.Status
         };
 
         return orderResult;
