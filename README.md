@@ -209,3 +209,5 @@ Você pode acessar o MongoDB localmente ou utilizando uma ferramenta como **Mong
 
 Você pode personalizar variáveis como conexões de banco de dados e credenciais de mensageria alterando o arquivo `appsettings.json` ou o `docker-compose.override.yml`.
 
+### Diagrama de Exemplo
+![img.png](img.png)
