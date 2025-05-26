@@ -6,5 +6,5 @@ public interface IOrderService
 {
     public Task<OrderResult> FindOrderById(Guid id);
     
-    public PagedResult<OrderResult> FindOrders(FilterOrderRequest filterOrderRequest);
+    public Task<PagedResult<OrderResult>> FindOrders(FilterOrderRequest filterOrderRequest);
 }
