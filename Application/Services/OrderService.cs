@@ -54,6 +54,10 @@ public class OrderService : IOrderService
             filters.Add(builder.Where(p => p.Status == filterOrderRequest.Status.ToString()));
         }
 
+        if (filters.Count == 0)
+        {
+            filters.Add(builder.Where(p => true));
+        }
         var orders =  _orderRepository.GetAll(builder.And(filters));
         var skip = (filterOrderRequest.Page - 1) * filterOrderRequest.PageSize;
         var count = await orders.CountDocumentsAsync();
